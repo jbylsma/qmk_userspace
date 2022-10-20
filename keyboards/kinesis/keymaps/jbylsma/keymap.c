@@ -51,3 +51,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            KC_PGDN,KC_ENTER ,KC_SPC
     )
 };
+
+#define COMBO_COUNT 2
+const uint16_t COMBO_LEN = COMBO_COUNT;
+const uint16_t PROGMEM home_combo[] = {KC_RGUI, KC_LEFT, COMBO_END};
+const uint16_t PROGMEM end_combo[] =  {KC_RGUI, KC_RGHT, COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+  COMBO(home_combo, KC_HOME),
+  COMBO(end_combo,  KC_END),
+};
