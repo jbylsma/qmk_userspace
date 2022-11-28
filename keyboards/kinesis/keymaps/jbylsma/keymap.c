@@ -52,13 +52,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-#define COMBO_COUNT 3
+#define COMBO_COUNT 5
 const uint16_t COMBO_LEN = COMBO_COUNT;
-const uint16_t PROGMEM home_combo[] = {KC_RGUI, KC_PGUP, COMBO_END};
-const uint16_t PROGMEM end_combo[] =  {KC_LGUI, KC_PGDN, COMBO_END};
-const uint16_t PROGMEM boot_combo[] = {KC_ESC,  QK_RBT,  COMBO_END};
+const uint16_t PROGMEM home1_combo[] = {KC_LGUI, KC_PGUP, COMBO_END};
+const uint16_t PROGMEM home2_combo[] = {KC_RGUI, KC_PGUP, COMBO_END};
+const uint16_t PROGMEM end1_combo[]  = {KC_LGUI, KC_PGDN, COMBO_END};
+const uint16_t PROGMEM end2_combo[]  = {KC_RGUI, KC_PGDN, COMBO_END};
+const uint16_t PROGMEM boot_combo[]  = {KC_ESC,  QK_RBT,  COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
-  COMBO(home_combo, KC_HOME),
-  COMBO(end_combo,  KC_END),
-  COMBO(boot_combo, QK_BOOT),
+  COMBO(home1_combo, KC_HOME),
+  COMBO(home2_combo, KC_HOME),
+  COMBO(end1_combo,  KC_END),
+  COMBO(end2_combo,  KC_END),
+  COMBO(boot_combo,  QK_BOOT),
 };
