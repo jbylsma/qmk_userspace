@@ -8,7 +8,7 @@
 * Keymap: Default Layer in Qwerty
 *
 * ,-------------------------------------------------------------------------------------------------------------------.
-* | Esc    |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F8  |  F9  |  F10 |  F12 | Mute | VoUp | VoDn |  FN0 |  BOOT  |
+* | Esc    |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F8  |  F9  |  F10 |  F12 | Mute | VoUp | VoDn |  FN0 |  RBT   |
 * |--------+------+------+------+------+------+---------------------------+------+------+------+------+------+--------|
 * | =+     |  1!  |  2@  |  3#  |  4$  |  5%  |                           |  6^  |  7&  |  8*  |  9(  |  0)  | -_     |
 * |--------+------+------+------+------+------|                           +------+------+------+------+------+--------|
@@ -40,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    KC_LCTL ,KC_LALT,
                                             KC_LGUI,
                            KC_BSPC,KC_DEL  ,KC_PGUP,
-           KC_F9  ,KC_F10 ,KC_F11 ,KC_F12  ,KC_KB_MUTE ,KC_KB_VOLUME_DOWN  ,KC_KB_VOLUME_UP, KC_NO, QK_BOOT,
+           KC_F9  ,KC_F10 ,KC_F11 ,KC_F12  ,KC_KB_MUTE ,KC_KB_VOLUME_DOWN  ,KC_KB_VOLUME_UP, KC_NO, QK_RBT,
            KC_6   ,KC_7   ,KC_8   ,KC_9    ,KC_0   ,KC_MINS,
            KC_Y   ,KC_U   ,KC_I   ,KC_O    ,KC_P   ,KC_BSLS,
            KC_H   ,KC_J   ,KC_K   ,KC_L    ,KC_SCLN,KC_QUOT,
@@ -52,11 +52,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-#define COMBO_COUNT 2
+#define COMBO_COUNT 3
 const uint16_t COMBO_LEN = COMBO_COUNT;
 const uint16_t PROGMEM home_combo[] = {KC_RGUI, KC_PGUP, COMBO_END};
 const uint16_t PROGMEM end_combo[] =  {KC_LGUI, KC_PGDN, COMBO_END};
+const uint16_t PROGMEM boot_combo[] = {KC_ESC,  QK_RBT,  COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
   COMBO(home_combo, KC_HOME),
   COMBO(end_combo,  KC_END),
+  COMBO(boot_combo, QK_BOOT),
 };
