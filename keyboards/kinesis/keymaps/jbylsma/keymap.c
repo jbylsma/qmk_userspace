@@ -1,7 +1,10 @@
 #include QMK_KEYBOARD_H
 
-#define QWERTY 0 // Base qwerty
-
+enum {
+  _QWERTY,
+  _QWERTY_GAME,
+  _PROGM,
+};
 
 /****************************************************************************************************
 *
@@ -30,7 +33,7 @@
 */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-[QWERTY] = LAYOUT(
+[_QWERTY] = LAYOUT(
            KC_ESC ,KC_F1  ,KC_F2  ,KC_F3   ,KC_F4  ,KC_F5  ,KC_F6  ,KC_F7  ,KC_F8,
            KC_EQL ,KC_1   ,KC_2   ,KC_3    ,KC_4   ,KC_5   ,
            KC_TAB ,KC_Q   ,KC_W   ,KC_E    ,KC_R   ,KC_T   ,
@@ -40,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    KC_LCTL ,KC_LALT,
                                             KC_LGUI,
                            KC_BSPC,KC_DEL  ,KC_PGUP,
-           KC_F9  ,KC_F10 ,KC_F11 ,KC_F12  ,KC_KB_MUTE ,KC_KB_VOLUME_DOWN  ,KC_KB_VOLUME_UP, KC_NO, QK_RBT,
+           KC_F9  ,KC_F10 ,KC_F11 ,KC_F12  ,KC_KB_MUTE ,KC_KB_VOLUME_DOWN  ,KC_KB_VOLUME_UP, KC_NO, MO(_PROGM),
            KC_6   ,KC_7   ,KC_8   ,KC_9    ,KC_0   ,KC_MINS,
            KC_Y   ,KC_U   ,KC_I   ,KC_O    ,KC_P   ,KC_BSLS,
            KC_H   ,KC_J   ,KC_K   ,KC_L    ,KC_SCLN,KC_QUOT,
@@ -49,20 +52,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                            KC_RALT,KC_RCTL ,
                            KC_RGUI,
                            KC_PGDN,KC_ENTER,KC_SPC
-    )
+    ),
+[_QWERTY_GAME] = LAYOUT(
+           _______,_______,_______,_______,_______,_______,_______,_______,_______,
+           _______,_______,_______,_______,_______,_______,
+           _______,_______,_______,_______,_______,_______,
+           _______,_______,_______,_______,_______,_______,
+           _______,_______,_______,_______,_______,_______,
+                   _______,_______,_______,_______,
+                                   _______,_______,
+                                           _______,
+                           KC_SPC ,_______,_______,
+           _______,_______,_______,_______,_______,_______,_______,_______,_______,
+           _______,_______,_______,_______,_______,_______,
+           _______,_______,_______,_______,_______,_______,
+           _______,_______,_______,_______,_______,_______,
+           _______,_______,_______,_______,_______,_______,
+                   _______,_______,_______,_______,
+                           _______,_______,
+                           _______,
+                           _______,_______,KC_BSPC
+    ),
+[_PROGM] = LAYOUT(
+           _______,_______,_______,DF(_QWERTY),_______,_______,_______,_______,_______,
+           _______,_______,_______,_______    ,_______,_______,
+           _______,_______,_______,_______    ,_______,_______,
+           _______,_______,_______,_______    ,_______,DF(_QWERTY_GAME),
+           _______,_______,_______,_______    ,_______,_______,
+                   _______,_______,_______    ,_______,
+                                   _______    ,_______,
+                                               _______,
+                           _______,_______    ,_______,
+           QK_BOOT,_______,_______,_______    ,_______,_______,_______,_______,_______,
+           _______,_______,_______,_______    ,_______,_______,
+           _______,_______,_______,_______    ,_______,_______,
+           _______,_______,_______,_______    ,_______,_______,
+           _______,_______,_______,_______    ,_______,_______,
+                   _______,_______,_______    ,_______,
+                           _______,_______    ,
+                           _______,
+                           _______,_______    ,_______
+    ),
 };
 
-#define COMBO_COUNT 5
+#define COMBO_COUNT 4
 const uint16_t COMBO_LEN = COMBO_COUNT;
 const uint16_t PROGMEM home1_combo[] = {KC_LGUI, KC_PGUP, COMBO_END};
 const uint16_t PROGMEM home2_combo[] = {KC_RGUI, KC_PGUP, COMBO_END};
 const uint16_t PROGMEM end1_combo[]  = {KC_LGUI, KC_PGDN, COMBO_END};
 const uint16_t PROGMEM end2_combo[]  = {KC_RGUI, KC_PGDN, COMBO_END};
-const uint16_t PROGMEM boot_combo[]  = {KC_ESC,  QK_RBT,  COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
   COMBO(home1_combo, KC_HOME),
   COMBO(home2_combo, KC_HOME),
   COMBO(end1_combo,  KC_END),
   COMBO(end2_combo,  KC_END),
-  COMBO(boot_combo,  QK_BOOT),
 };
