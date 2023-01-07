@@ -107,3 +107,28 @@ combo_t key_combos[COMBO_COUNT] = {
   COMBO(end1_combo,  KC_END),
   COMBO(end2_combo,  KC_END),
 };
+
+
+void matrix_init_user(void) {
+  const int blink_duration = 100;
+
+  led_init_ports();
+
+  for (int i = 0; i < 2; i++) {
+    if (i > 0) {
+      wait_ms(blink_duration);
+    }
+
+    writePinLow(LED_NUM_LOCK_PIN);
+    writePinLow(LED_CAPS_LOCK_PIN);
+    writePinLow(LED_SCROLL_LOCK_PIN);
+    writePinLow(LED_COMPOSE_PIN);
+
+    wait_ms(blink_duration);
+
+    writePinHigh(LED_NUM_LOCK_PIN);
+    writePinHigh(LED_CAPS_LOCK_PIN);
+    writePinHigh(LED_SCROLL_LOCK_PIN);
+    writePinHigh(LED_COMPOSE_PIN);
+  }
+}
