@@ -6,6 +6,8 @@ enum {
   _PROGM,
 };
 
+void _set_layer_led(layer_state_t state);
+
 /****************************************************************************************************
 *
 * Keymap: Default Layer in Qwerty
@@ -131,4 +133,30 @@ void matrix_init_user(void) {
     writePinHigh(LED_SCROLL_LOCK_PIN);
     writePinHigh(LED_COMPOSE_PIN);
   }
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  _set_layer_led(state);
+  return state;
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+  _set_layer_led(state);
+  return state;
+}
+
+void _set_layer_led(layer_state_t state) {
+    writePinHigh(LED_COMPOSE_PIN);
+
+    if (get_highest_layer(state | default_layer_state) != 0) {
+      writePinLow(LED_COMPOSE_PIN);
+    }
+}
+
+bool led_update_user(led_t led_state) {
+    led_state.raw = ~led_state.raw;
+    writePin(LED_NUM_LOCK_PIN, led_state.num_lock);
+    writePin(LED_CAPS_LOCK_PIN, led_state.caps_lock);
+    writePin(LED_SCROLL_LOCK_PIN, led_state.scroll_lock);
+    return false;
 }
