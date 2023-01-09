@@ -11,7 +11,7 @@ enum {
   _PG, // Progrm
 };
 
-void _set_layer_led(layer_state_t state);
+layer_state_t _set_layer_led(layer_state_t state);
 
 /****************************************************************************************************
 *
@@ -122,6 +122,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 
+/**
+ * Combos
+ */
 #define COMBO_COUNT 4
 const uint16_t COMBO_LEN = COMBO_COUNT;
 const uint16_t PROGMEM home1_combo[] = {KC_LGUI, KC_PGUP, COMBO_END};
@@ -135,7 +138,9 @@ combo_t key_combos[COMBO_COUNT] = {
   COMBO(end2_combo,  KC_END),
 };
 
-
+/**
+ * Blink all LEDs when powering on
+ */
 void matrix_init_user(void) {
   const int blink_duration = 100;
 
@@ -160,24 +165,30 @@ void matrix_init_user(void) {
   }
 }
 
+/**
+ * Use the Compose LED for non-default layer states
+ */
 layer_state_t layer_state_set_user(layer_state_t state) {
-  _set_layer_led(state);
-  return state;
+  return _set_layer_led(state);
 }
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
-  _set_layer_led(state);
-  return state;
+  return _set_layer_led(state);
 }
 
-void _set_layer_led(layer_state_t state) {
+layer_state_t _set_layer_led(layer_state_t state) {
     writePinHigh(LED_COMPOSE_PIN);
 
     if (get_highest_layer(state | default_layer_state) != 0) {
       writePinLow(LED_COMPOSE_PIN);
     }
+
+    return state;
 }
 
+/**
+ * Manually set LEDs to allow the Compose LED to be overridden
+ */
 bool led_update_user(led_t led_state) {
     led_state.raw = ~led_state.raw;
     writePin(LED_NUM_LOCK_PIN, led_state.num_lock);
