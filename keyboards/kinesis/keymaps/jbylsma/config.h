@@ -1,4 +1,9 @@
 #pragma once
+
+// Increase debounce from the default 20.
+#undef DEBOUNCE
+#define DEBOUNCE 30
+
 #define MOUSEKEY_INERTIA
 
 #undef MOUSEKEY_DELAY
