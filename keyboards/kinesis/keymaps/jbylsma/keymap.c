@@ -103,8 +103,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // Map both shifts to caps lock
-  if ((get_mods() & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
-    tap_code(KC_CAPS);
+  if (record->event.pressed) {
+    switch (keycode) {
+      case KC_LSFT:
+        if (get_mods() & MOD_BIT(KC_RSFT)) {
+          tap_code(KC_CAPS);
+        }
+        break;
+      case KC_RSFT:
+        if (get_mods() & MOD_BIT(KC_LSFT)) {
+          tap_code(KC_CAPS);
+        }
+        break;
+    }
   }
   return true;
 }
