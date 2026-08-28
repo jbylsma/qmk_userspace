@@ -80,10 +80,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,                                                                     KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,
     TO(_BS),  KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,                                                                     KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,
     _______,  KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,                                                                     KC_NO,    KC_NO,    KC_NO,    KC_NO,    KC_NO,    _______,
-              KC_NO,    _______,  KC_MS_L,  KC_MS_R,                                                                                       KC_MS_D,  KC_MS_U,  KC_NO,    KC_NO,
+              KC_NO,    _______,  MS_LEFT,  MS_RGHT,                                                                                       MS_DOWN,  MS_UP,    KC_NO,    KC_NO,
                                                       _______,  _______,                                               _______,  _______,
                                                                 _______,                                               _______,
-                                            KC_NO,    KC_NO,    KC_WH_U,                                               KC_WH_D,  KC_BTN1,  KC_BTN2
+                                            KC_NO,    KC_NO,    MS_WHLU,                                               MS_WHLD,  MS_BTN1,  MS_BTN2
   ),
   [_PG] = LAYOUT(
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,       QK_BOOT,  _______,  _______,  _______,  KC_PSCR,  KC_SCRL,  KC_PAUS,  _______,  _______,
@@ -149,17 +149,17 @@ void matrix_init_user(void) {
       wait_ms(blink_duration);
     }
 
-    writePinLow(LED_NUM_LOCK_PIN);
-    writePinLow(LED_CAPS_LOCK_PIN);
-    writePinLow(LED_SCROLL_LOCK_PIN);
-    writePinLow(LED_COMPOSE_PIN);
+    gpio_write_pin_low(LED_NUM_LOCK_PIN);
+    gpio_write_pin_low(LED_CAPS_LOCK_PIN);
+    gpio_write_pin_low(LED_SCROLL_LOCK_PIN);
+    gpio_write_pin_low(LED_COMPOSE_PIN);
 
     wait_ms(blink_duration);
 
-    writePinHigh(LED_NUM_LOCK_PIN);
-    writePinHigh(LED_CAPS_LOCK_PIN);
-    writePinHigh(LED_SCROLL_LOCK_PIN);
-    writePinHigh(LED_COMPOSE_PIN);
+    gpio_write_pin_high(LED_NUM_LOCK_PIN);
+    gpio_write_pin_high(LED_CAPS_LOCK_PIN);
+    gpio_write_pin_high(LED_SCROLL_LOCK_PIN);
+    gpio_write_pin_high(LED_COMPOSE_PIN);
   }
 }
 
@@ -175,10 +175,10 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 }
 
 layer_state_t _set_layer_led(layer_state_t state) {
-    writePinHigh(LED_COMPOSE_PIN);
+    gpio_write_pin_high(LED_COMPOSE_PIN);
 
     if (get_highest_layer(state | default_layer_state) != 0) {
-      writePinLow(LED_COMPOSE_PIN);
+      gpio_write_pin_low(LED_COMPOSE_PIN);
     }
 
     return state;
@@ -189,8 +189,8 @@ layer_state_t _set_layer_led(layer_state_t state) {
  */
 bool led_update_user(led_t led_state) {
     led_state.raw = ~led_state.raw;
-    writePin(LED_NUM_LOCK_PIN, led_state.num_lock);
-    writePin(LED_CAPS_LOCK_PIN, led_state.caps_lock);
-    writePin(LED_SCROLL_LOCK_PIN, led_state.scroll_lock);
+    gpio_write_pin(LED_NUM_LOCK_PIN, led_state.num_lock);
+    gpio_write_pin(LED_CAPS_LOCK_PIN, led_state.caps_lock);
+    gpio_write_pin(LED_SCROLL_LOCK_PIN, led_state.scroll_lock);
     return false;
 }
